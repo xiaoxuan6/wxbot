@@ -5,6 +5,8 @@ import (
 	"github.com/eatmoreapple/openwechat"
 	"github.com/sirupsen/logrus"
 	"github.com/skip2/go-qrcode"
+	"os"
+	"strings"
 	"time"
 )
 
@@ -19,6 +21,18 @@ func main() {
 
 	bot.UUIDCallback = ConsoleQrCode
 	bot.SyncCheckCallback = nil
+
+	// 在用户登录后需要实时接受微信发送过来的消息。
+	bot.MessageHandler = func(msg *openwechat.Message) {
+		if msg.IsText() && msg.Content == "ping" {
+			_, err = msg.ReplyText("pong")
+			if err != nil {
+				logrus.Fatalf("ping msg replyText err %s", err.Error())
+			}
+		}
+
+		messageHandler(msg)
+	}
 
 	if err = bot.Login(); err != nil {
 		logrus.Fatalf("bot Login err %s", err.Error())
@@ -42,6 +56,24 @@ func main() {
 
 	bot.Block()
 
+}
+
+func messageHandler(msg *openwechat.Message) {
+	// 仅处理 text 类型的消息
+	if msg.IsText() {
+		if msg.Content == "test" {
+			msg.ReplyText("测试")
+			return
+		}
+
+		if strings.Contains(msg.Content, "打赏") {
+			img, _ := os.Open("img.png")
+			defer img.Close()
+
+			msg.ReplyImage(img)
+			return
+		}
+	}
 }
 
 func ConsoleQrCode(uuid string) {
