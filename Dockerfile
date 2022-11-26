@@ -4,9 +4,11 @@ WORKDIR /app
 
 ADD . /app
 
-RUN go get -u -v github.com/kardianos/govendor \
-    && govendor sync \
-    && GOOS=linux GOARCH=386 go build -v -o wxbot
+# 配置goproxy
+ENV GOPROXY=https://goproxy.io,direct
+ENV GO111MODULE=on
+
+RUN GOOS=linux GOARCH=386 go build -o wxbot main.go
 
 FROM scratch
 
