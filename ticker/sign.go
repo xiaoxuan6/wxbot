@@ -11,10 +11,12 @@ func sign() {
 		select {
 		case t := <-time.After(1 * time.Minute):
 			nowTime := t.Format("15:04") // 2006-01-02 15:04:05
-			logrus.Infof("nowTiem %s", nowTime)
+			//logrus.Infof("nowTiem %s", nowTime)
 			if nowTime == "9:00" {
 				go sendMessageWithUser()
 			}
+
+			go sendMessageWithGroup()
 		}
 	}
 }
@@ -33,4 +35,16 @@ func sendMessageWithUser() {
 	}
 
 	logrus.Infof("friend send text mesif: %s", message.MsgId)
+}
+
+func sendMessageWithGroup() {
+	group := global.Groups.SearchByNickName(1, "开发群")
+	//group := global.Groups.SearchByNickName(1, "开发群").SendText("")
+
+	first := group.First()
+	if first == nil {
+		logrus.Fatalf("search group fail")
+	}
+
+	first.SendText("测试")
 }

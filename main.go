@@ -44,13 +44,17 @@ func main() {
 		logrus.Fatalf("wx self get friends err: %s ", err.Error())
 	}
 
+	//for _, v := range friends {
+	//	logrus.Infof("username: %s、nickname：%s、remarkname：%s", v.UserName, v.NickName, v.RemarkName)
+	//}
+
 	global.Groups, err = global.CurrentUser.Groups(true)
 	if err != nil {
 		logrus.Fatalf("wx self get groups err: %s", err.Error())
 	}
 
-	//for _, v := range friends {
-	//	logrus.Infof("username: %s、nickname：%s、remarkname：%s", v.UserName, v.NickName, v.RemarkName)
+	//for _, val := range global.Groups {
+	//	logrus.Infof("group nickname：%s、remarkname：%s、username：%s", val.NickName, val.RemarkName, val.UserName)
 	//}
 
 	ticker.Ticker()
