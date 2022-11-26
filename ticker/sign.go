@@ -2,7 +2,7 @@ package ticker
 
 import (
 	"github.com/sirupsen/logrus"
-	"github.com/xiaoxuan6/wxbot/comm"
+	"github.com/xiaoxuan6/wxbot/global"
 	"time"
 )
 
@@ -21,7 +21,7 @@ func sign() {
 
 func sendMessageWithUser() {
 	//resFriends := friends.SearchByNickName(1, "君发大头商店")
-	resFriends := comm.Friends.SearchByRemarkName(1, "小号")
+	resFriends := global.Friends.SearchByRemarkName(1, "小号")
 	friend := resFriends.First()
 	if friend == nil {
 		logrus.Fatalf("search friend fail")

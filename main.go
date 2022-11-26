@@ -5,7 +5,7 @@ import (
 	"github.com/eatmoreapple/openwechat"
 	"github.com/sirupsen/logrus"
 	"github.com/skip2/go-qrcode"
-	"github.com/xiaoxuan6/wxbot/comm"
+	"github.com/xiaoxuan6/wxbot/global"
 	msg2 "github.com/xiaoxuan6/wxbot/msg"
 	"github.com/xiaoxuan6/wxbot/ticker"
 )
@@ -34,17 +34,17 @@ func main() {
 		logrus.Fatalf("bot Login err %s", err.Error())
 	}
 
-	comm.CurrentUser, err = bot.GetCurrentUser()
+	global.CurrentUser, err = bot.GetCurrentUser()
 	if err != nil {
 		logrus.Fatalf("GetCurrentUser err: %s ", err.Error())
 	}
 
-	comm.Friends, err = comm.CurrentUser.Friends(true)
+	global.Friends, err = global.CurrentUser.Friends(true)
 	if err != nil {
 		logrus.Fatalf("wx self get friends err: %s ", err.Error())
 	}
 
-	comm.Groups, err = comm.CurrentUser.Groups(true)
+	global.Groups, err = global.CurrentUser.Groups(true)
 	if err != nil {
 		logrus.Fatalf("wx self get groups err: %s", err.Error())
 	}

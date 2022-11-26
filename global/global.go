@@ -1,4 +1,4 @@
-package comm
+package global
 
 import "github.com/eatmoreapple/openwechat"
 
