@@ -12,18 +12,18 @@ func sign() {
 		case t := <-time.After(1 * time.Minute):
 			nowTime := t.Format("15:04") // 2006-01-02 15:04:05
 			//logrus.Infof("nowTiem %s", nowTime)
-			if nowTime == "9:00" {
+			if nowTime == "16:00" {
 				go sendMessageWithUser()
 			}
 
-			go sendMessageWithGroup()
+			//go sendMessageWithGroup()
 		}
 	}
 }
 
 func sendMessageWithUser() {
 	//resFriends := friends.SearchByNickName(1, "君发大头商店")
-	resFriends := global.Friends.SearchByRemarkName(1, "小号")
+	resFriends := global.Friends.SearchByRemarkName(1, "A009小鸭")
 	friend := resFriends.First()
 	if friend == nil {
 		logrus.Fatalf("search friend fail")
